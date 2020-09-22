@@ -1,2 +1,2 @@
 # running_records
-Tools for automatically scoring a running record reading assessment.
+Tools to assist in automatically scoring a running record reading assessment.

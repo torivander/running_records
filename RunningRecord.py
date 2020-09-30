@@ -109,7 +109,7 @@ class Running_record:
     TODO: Figure out how to call a pre-trained WSTT model for transcription
     """
 
-    def __init__(self, audio_filepath: str, wstt_credentials: str, ground_truth: str):
+    def __init__(self, audio_filepath: str, wstt_credentials: dict, ground_truth: str):
         self.audio_filepath = audio_filepath
         self.wstt_credentials = wstt_credentials
         self.ground_truth = ground_truth
@@ -121,7 +121,7 @@ class Running_record:
         representation to that df, and then score the resulting df as a running
         record using the ground truth transcript.
         """
-        self.get_WSTT_transcript(audio_filepath, wstt_credentials)
+        self.get_WSTT_transcript(self.audio_filepath, self.wstt_credentials)
         self.convert_json_to_pddf()
         self.convert_string_to_pddf()
         self.add_phonetic_representation()

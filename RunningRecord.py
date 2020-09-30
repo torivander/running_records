@@ -20,10 +20,14 @@ def get_dmeta(string):
   dmeta=fuzzy.DMetaphone()
   splitstring = string.split()
   stringlist = []
+  encoding = 'utf-8'
   for word in splitstring:
     stringlist.append(dmeta(word)[0])
+    
+  # Converts nonetypes to bytes for empty string
+  stringlist = [(bytes('',encoding)) if word is None else word for word in stringlist]
+  
   #decoding bytes into a unicode string for each word
-  encoding = 'utf-8'
   bytes2str = []
   for byte in stringlist:
     b2str = byte.decode(encoding)

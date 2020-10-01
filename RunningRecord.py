@@ -10,6 +10,9 @@ import numpy as np
 import fuzzy
 import string
 
+!pip install jiwer
+from jiwer import wer 
+
 # First define helper functions.
 
 # input string, get metaphone representations of each word in the string

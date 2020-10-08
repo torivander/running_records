@@ -9,6 +9,7 @@ import pandas as pd
 import numpy as np
 import fuzzy
 import string
+from jiwer import wer
 
 # First define helper functions.
 
@@ -113,10 +114,11 @@ class Running_record:
     TODO: Figure out how to call a pre-trained WSTT model for transcription
     """
 
-    def __init__(self, audio_filepath: str, wstt_credentials: dict, ground_truth: str):
+    def __init__(self, audio_filepath: str, wstt_credentials: dict, ground_truth: str, human_gen_transcript: str):
         self.audio_filepath = audio_filepath
         self.wstt_credentials = wstt_credentials
         self.ground_truth = ground_truth
+        self.human_gen_transcript = human_gen_transcript
 
     def process_running_record(self):
         """
@@ -152,6 +154,8 @@ class Running_record:
         ----------
         transcript_json: str
           json format
+          
+      
 
         It is recommended to use a customized, pretrained instance of WSTT.
         """
@@ -351,6 +355,21 @@ class Running_record:
         transcript_df = transcript_df.drop(columns=['match', 'match2', 'dup', 'word_index', 'wrong_tag']).reset_index()
 
         self.transcript_df = transcript_df
+        
+        """
+        word error rate method (using python package jiwer's wer)
+        Inputs
+        -------
+          self (need human_gen_transcript (str) and output of get_WSTT_Transcript (str))
+        
+        Returns
+        -------
+          word_error_rate 
+          """
+        def get_word_error_rate(self):
+          WSTT_Transcript = get_WSTT_Transcript(self.audio_filepath, self.wstt_credentials)
+          word_error_rate = wer(self.human_gen_transcript, WSTT_Transcript)
+          return word_error_rate
 
 
 if __name__=="__main__":
